@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 
 # Функция конфигурирования и запуска бота
-def main() -> None:
+async def main() -> None:
     # Конфигурируем логирование
     logging.basicConfig(
         level=logging.INFO,
@@ -40,16 +40,17 @@ def main() -> None:
 
     # Запускаем polling
     try:
-        dp.run_polling(bot)
+        await dp.start_polling(bot)
     finally:
         # Выводим в консоль информацию о завершении работы бота
+        await bot.session.close()
         logger.info('Bot stopped!')
 
 
 if __name__ == '__main__':
     try:
         # Запускаем функцию main
-        main()
+        asyncio.run(main())
     except SystemExit:
         # Выводим в консоль сообщение об ошибке,
         # если получены исключения KeyboardInterrupt или SystemExit
