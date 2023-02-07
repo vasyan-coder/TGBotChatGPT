@@ -7,6 +7,8 @@ from config_data.config import Config, load_config
 
 from handlers.user_handlers import register_user_handlers
 
+from external_services.openai_init import openai_init
+
 # Инициализируем логгер
 logger = logging.getLogger(__name__)
 
@@ -36,6 +38,9 @@ async def main() -> None:
 
     # Регистрируем все хэндлеры
     register_all_handlers(dp)
+
+    # Инициализируем openai сервис
+    openai_init()
 
     # Запускаем polling
     try:
